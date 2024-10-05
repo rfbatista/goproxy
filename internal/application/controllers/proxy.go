@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"goproxy/internal/infrastructure/config"
 	"goproxy/internal/infrastructure/repositories"
 	"net"
@@ -16,14 +15,7 @@ import (
 
 var (
 	tagRegex = regexp.MustCompile(
-		`<(?:a|abbr|acronym|address|applet|area|audioscope|b|base|basefront|bdo|bgsound|bi
-g|blackface|blink|blockquote|body|bq|br|button|caption|center|cite|code|col|colgroup
-|comment|dd|del|dfn|dir|div|dl|dt|em|embed|fieldset|fn|font|form|frame|frameset|h
-1|head|hr|html|i|iframe|ilayer|img|input|ins|isindex|kdb|keygen|label|layer|legend|li|l
-imittext|link|listing|map|marquee|menu|meta|multicol|nobr|noembed|noframes|noscri
-pt|nosmartquotes|object|ol|optgroup|option|p|param|plaintext|pre|q|rt|ruby|s|samp|
-script|select|server|shadow|sidebar|small|spacer|span|strike|strong|style|sub|sup|tabl
-e|tbody|td|textarea|tfoot|th|thead|title|tr|tt|u|ul|var|wbr|xml|xmp)\\W`,
+		`\b(?:a|abbr|acronym|address|applet|area|audioscope|b|base|basefront|bdo|bgsound|big|blackface|blink|blockquote|body|bq|br|button|caption|center|cite|code|col|colgroup|comment|dd|del|dfn|dir|div|dl|dt|em|embed|fieldset|fn|font|form|frame|frameset|h1|head|hr|html|i|iframe|ilayer|img|input|ins|isindex|kdb|keygen|label|layer|legend|li|limittext|link|listing|map|marquee|menu|meta|multicol|nobr|noembed|noframes|noscript|nosmartquotes|object|ol|optgroup|option|p|param|plaintext|pre|q|rt|ruby|s|samp|script|select|server|shadow|sidebar|small|spacer|span|strike|strong|style|sub|sup|table|tbody|td|textarea|tfoot|th|thead|title|tr|tt|u|ul|var|wbr|xml|xmp)\b`,
 	)
 	replaceIp = regexp.MustCompile("[^0-9]")
 )
@@ -67,7 +59,6 @@ func (p ProxyController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if strings.HasPrefix(r.Host, "www.") {
 		r.URL.Path = "/site/www" + r.URL.Path
 	}
-	fmt.Println(r.URL.RawQuery)
 	if tagRegex.MatchString(r.URL.RawQuery) || checkBody(r) {
 		http.Error(w, "Forbidden", http.StatusForbidden)
 		return
