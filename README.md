@@ -24,7 +24,7 @@ To start the proxy server, run the following command:
 ```sh
 go run ./cmd/server <BACKEND_URL>
 ```
-<BACKEND_URL>: The URL of the backend service to which requests will be proxied.
+`<BACKEND_URL>`: The URL of the backend service to which requests will be proxied.
 
 Example
 ```sh
